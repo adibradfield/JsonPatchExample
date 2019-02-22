@@ -1,6 +1,7 @@
 ﻿using System.Web.Http;
 using JsonPatchExample.BusinessLogic;
 using JsonPatchExample.Models.DTO;
+using JsonPatchExample.Models.Entity;
 using JsonPatchExample.Models.Mappers;
 using Microsoft.AspNetCore.JsonPatch;
 
@@ -14,10 +15,10 @@ namespace JsonPatchExample.Controllers
         public IHttpActionResult PatchPerson(JsonPatchDocument<PersonPatchDto> patchDocument)
         {
             var mapper = new PersonPatchMapper();
-            var entityPatch = mapper.Map(patchDocument);
+            JsonPatchDocument<PersonPatchEntity> entityPatch = mapper.Map(patchDocument);
 
             var logic = new PersonLogic();
-            var result = logic.Patch(entityPatch);
+            PersonPatchEntity result = logic.Patch(entityPatch);
 
             return Ok(result);
         }
